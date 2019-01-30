@@ -5,24 +5,28 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Buscador de gatos</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <!-- Materialize-->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 		<link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
 		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+		<!-- React -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+        <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
 
     </head>
     <body>
 
         <div class="container" id="imagenes">
             <div>
-                <h3>Búsqueda de fotos de gatos</h3>
+                <h3  class="center-align" style="font-family:Courier New, Courier, monospace; "> Búsqueda de fotos de gatos</h3>
                 <span>Buscar por categoría</span>
                 <select name="categories" class="browser-default"
                     id="categories" style="width:200px;">
 
                 </select>
+                
                 <button class="waves-effect waves-light btn" id="buscar">Buscar</button>
             </div>
 

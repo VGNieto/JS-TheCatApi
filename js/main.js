@@ -108,7 +108,9 @@ function fillOptions(data) {
 
         let op = document.createElement("option");
         op.value = data[i].id;
-        op.textContent = data[i].name;
+        let palabra = data[i].name;
+        let first = palabra.charAt(0).toUpperCase();
+        op.textContent = first+palabra.slice(1,palabra.length);
         sel.appendChild(op);
 
     }
@@ -126,15 +128,15 @@ function showImages(data) {
 
         let image = document.createElement("img");
       
-        image.className="materialboxed";
+        image.className="materialboxed z-depth-3";
         image.src = data[i].url;
         image.height = 200;
         image.width =200;
-        image.setAttribute("style","border:5px solid #e0e0eb");
+        image.setAttribute("style","border:15px solid #edf2f4;margin-bottom:15px");
      
 
         let listItem = document.createElement("li");
-        listItem.className = "col s6 m3 l5 xl3";
+        listItem.className = "col s6 m4 l3 xl3";
 
         listItem.appendChild(image);
         cont.appendChild(listItem);
