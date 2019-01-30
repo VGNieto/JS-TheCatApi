@@ -15,7 +15,7 @@ document.getElementById("anterior").addEventListener("click",()=>{
     if(paginaActual>1){
         let opt = document.getElementById("categories").value;
         paginaActual--;
-        let lnk = "https://api.thecatapi.com/v1/images/search?limit=8&order=desc&page=" + paginaActual + "&category_ids=" + opt;
+        let lnk = "https://api.thecatapi.com/v1/images/search?limit=8&mime_types=jpg,png&order=desc&page=" + paginaActual + "&category_ids=" + opt;
         console.log(lnk);
         requireData(lnk).then(function (data) {
             showImages(data);
@@ -32,7 +32,7 @@ document.getElementById("siguiente").addEventListener("click",()=>{
         let opt = document.getElementById("categories").value;
         paginaActual++;
         
-        let lnk = "https://api.thecatapi.com/v1/images/search?limit=8&order=desc&page=" + paginaActual + "&category_ids=" + opt;
+        let lnk = "https://api.thecatapi.com/v1/images/search?limit=8&mime_types=jpg,png&order=desc&page=" + paginaActual + "&category_ids=" + opt;
         console.log(lnk);
         requireData(lnk).then(function (data) {
             showImages(data);
@@ -47,7 +47,7 @@ for (let i = 1; i < lista.length-1; i++) {
     lista[i].addEventListener("click", () => {
         paginaActual = i;
         let opt = document.getElementById("categories").value;
-        let lnk = "https://api.thecatapi.com/v1/images/search?limit=8&order=desc&page=" + i + "&category_ids=" + opt;
+        let lnk = "https://api.thecatapi.com/v1/images/search?limit=8&mime_types=jpg,png&order=desc&page=" + i + "&category_ids=" + opt;
         requireData(lnk).then(function (data) {
             showImages(data);
         }).catch(function (error) {
@@ -69,7 +69,7 @@ function modificarPaginaActual(){
 function search() {
 
     let opt = document.getElementById("categories").value;
-    let lnk = "https://api.thecatapi.com/v1/images/search?limit=8&order=desc&page=1&category_ids=" + opt;
+    let lnk = "https://api.thecatapi.com/v1/images/search?limit=8&mime_types=jpg,png&order=desc&page=1&category_ids=" + opt;
     requireData(lnk).then(function (data) {
         showImages(data);
     }).catch(function (error) {
@@ -125,16 +125,20 @@ function showImages(data) {
     for (let i = 0; i < data.length; i++) {
 
         let image = document.createElement("img");
+      
+        image.className="materialboxed";
         image.src = data[i].url;
         image.height = 200;
         image.width =200;
+        image.setAttribute("style","border:5px solid #e0e0eb");
+     
 
         let listItem = document.createElement("li");
-        listItem.className = "col s12 m5 l5 xl3";
+        listItem.className = "col s6 m3 l5 xl3";
 
         listItem.appendChild(image);
         cont.appendChild(listItem);
     }
-
+    M.AutoInit();
 
 }

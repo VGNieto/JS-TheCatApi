@@ -5,12 +5,12 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>Buscador de gatos</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <!--Import Google Icon Font-->
-        <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-            rel="stylesheet">
-        <!--Import materialize.css-->
-        <link type="text/css" rel="stylesheet" href="css/materialize.min.css"
-            media="screen,projection" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
     </head>
     <body>
@@ -19,18 +19,20 @@
             <div>
                 <h3>Búsqueda de fotos de gatos</h3>
                 <span>Buscar por categoría</span>
-                <select name="categories" class="browser-default"id="categories">
+                <select name="categories" class="browser-default"
+                    id="categories" style="width:200px;">
 
                 </select>
                 <button class="waves-effect waves-light btn" id="buscar">Buscar</button>
             </div>
 
-            <ul class="row" id="listaImagenes">
+            <ul class="row center-align" id="listaImagenes">
 
             </ul>
 
             <ul class="pagination center-align" id="paginas">
-                <li class="waves-effect" id="anterior"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+                <li class="waves-effect" id="anterior"><a href="#!"><i
+                            class="material-icons">chevron_left</i></a></li>
                 <li class="waves-effect active"><a href="#!1">1</a></li>
                 <li class="waves-effect"><a href="#!2">2</a></li>
                 <li class="waves-effect"><a href="#!3">3</a></li>
@@ -38,7 +40,8 @@
                 <li class="waves-effect"><a href="#!5">5</a></li>
                 <li class="waves-effect"><a href="#!6">6</a></li>
                 <li class="waves-effect"><a href="#!7">7</a></li>
-                <li class="waves-effect" id="siguiente"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+                <li class="waves-effect" id="siguiente"><a href="#!"><i
+                            class="material-icons">chevron_right</i></a></li>
             </ul>
 
 
@@ -46,5 +49,8 @@
 
         <script src="./js/main.js"></script>
         <script type="text/javascript" src="js/materialize.min.js"></script>
+        
+        
+        </script>
     </body>
 </html>
