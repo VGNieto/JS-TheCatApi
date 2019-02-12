@@ -6,51 +6,60 @@
         <title>Buscador de gatos</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <!-- Materialize-->
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-		<link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
-		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-		<!-- React -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-        <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
-        <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+        <!--Import Google Icon Font-->
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+      <!--Import materialize.css-->
+      <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+		
 
     </head>
     <body>
 
-        <div class="container" id="imagenes">
+        <div class="container row" id="imagenes">
             <div>
-                <h3  class="center-align" style="font-family:Courier New, Courier, monospace; "> Búsqueda de fotos de gatos</h3>
-                <span>Buscar por categoría</span>
-                <select name="categories" class="browser-default"
-                    id="categories" style="width:200px;">
-
-                </select>
+                <h3  class="center-align col s12" style="font-family:Courier New, Courier, monospace; "> Búsqueda de fotos de gatos</h3>
                 
-                <button class="waves-effect waves-light btn" id="buscar">Buscar</button>
+                <div class="col s12 m12 l3 xl3">
+                    <span>Buscar por categoría</span>
+                    <select name="categories" class="browser-default"
+                        id="categories" style="width:200px;"></select>
+                </div>
+                
+                <div class="col s12 m12 l8 xl8">
+                    <span>Número de imágenes por página</span>
+                    <select class="browser-default"
+                        id="numeroDeImagenes" style="width:200px;">
+                        <option value="4">4</option>
+                        <option value="8">8</option>
+                        <option value="12">12</option>
+
+                    </select>
+                </div>
+                <div class="col s12 m12 l12 xl12">
+                    <button class="waves-effect waves-light btn" id="buscar">Buscar</button>
+                </div>
             </div>
 
-            <ul class="row center-align" id="listaImagenes">
+            <ul class="row center-align col s12" id="listaImagenes">
                 
             </ul>
 
-            <ul class="pagination center-align" id="paginas">
-                <li class="waves-effect" id="anterior"><a href="#!"><i
-                            class="material-icons">chevron_left</i></a></li>
+            <ul class="pagination center-align col s12" id="paginas">
+                <li class="waves-effect" id="primero" style="margin-right:10px; font-size:20px; font-weight:bold;"><<</a></li>
+                <li class="waves-effect" id="anterior" style="margin-right:10px; font-size:20px; font-weight:bold;"><</a></li>
             
                 <div style="display:inline" id="LinksPaginacion"></div> 
             
-                <li class="waves-effect" id="siguiente"><a href="#!"><i
-                            class="material-icons">chevron_right</i></a></li>
+                <li class="waves-effect" id="siguiente" style="margin-left:10px; font-size:20px; font-weight:bold;">></a></li>
+
+                <li class="waves-effect" id="ultimo" style="margin-left:10px; font-size:20px; font-weight:bold;">>></a></li>
             </ul>
 
 
         </div>
 
         <script src="./js/main.js"></script>
-        <script type="text/javascript" src="js/materialize.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>        
         
-        
-        </script>
     </body>
 </html>

@@ -1,9 +1,13 @@
 var apiKey = "e6674da0-82e2-4584-8daa-797f03695db4";
 var catLink = "https://api.thecatapi.com/v1/categories";
+var catImages = "https://api.thecatapi.com/v1/images/search?limit=50&order=Desc&mime_types=jpg,png";
 var lista = document.getElementById("paginas").getElementsByTagName("li");
 var divLista = document.getElementById("LinksPaginacion");
 var buscar = document.getElementById("buscar");
-var paginaActual = 1;
+var numeroDeImagenes = document.getElementById("numeroDeImagenes").value;
+var paginaActual = 0;
+var totalPaginas = 0;
+
 buscar.addEventListener("click", search);
 
 requireData(catLink).then(function (data) {
@@ -13,19 +17,32 @@ requireData(catLink).then(function (data) {
 })
 
 
+requireData(catImages).then(function (data) {
+    if(data.length%numeroDeImagenes==0){
+        totalPaginas = parseInt((data.length/numeroDeImagenes));
+    } else{
+        totalPaginas = parseInt((data.length/numeroDeImagenes)+1);
+    }
+}).catch(function (error) {
+    console.log(error);
+})
+
+
+
 
 document.getElementById("anterior").addEventListener("click", () => {
-    if (paginaActual > 1) {
+    if (paginaActual > 0) {
         let opt = document.getElementById("categories").value;
         paginaActual--;
-        let lnk = "https://api.thecatapi.com/v1/images/search?limit=8&mime_types=jpg,png&order=desc&page=" + paginaActual + "&category_ids=" + opt;
+        numeroDeImagenes = document.getElementById("numeroDeImagenes").value;
+        let lnk = "https://api.thecatapi.com/v1/images/search?limit="+numeroDeImagenes+"&mime_types=jpg,png&order=desc&page=" + paginaActual + "&category_ids=" + opt;
         console.log(lnk);
         requireData(lnk).then(function (data) {
             showImages(data);
         }).catch(function (error) {
             console.log(error);
         })
-        modificarPaginaActual();
+        modificarPaginador();
 
     }
 })
@@ -33,12 +50,11 @@ document.getElementById("anterior").addEventListener("click", () => {
 document.getElementById("siguiente").addEventListener("click", () => {
      lista = document.getElementById("paginas").getElementsByTagName("li");
     
-     if(paginaActual != lista.length-1){
-
+     if(paginaActual<totalPaginas-1){
         let opt = document.getElementById("categories").value;
         paginaActual++;
-
-        let lnk = "https://api.thecatapi.com/v1/images/search?limit=8&mime_types=jpg,png&order=desc&page=" + paginaActual + "&category_ids=" + opt;
+        numeroDeImagenes = document.getElementById("numeroDeImagenes").value;
+        let lnk = "https://api.thecatapi.com/v1/images/search?limit="+numeroDeImagenes+"&mime_types=jpg,png&order=desc&page=" + paginaActual + "&category_ids=" + opt;
         console.log(lnk);
 
         requireData(lnk).then(function (data) {
@@ -46,132 +62,97 @@ document.getElementById("siguiente").addEventListener("click", () => {
         }).catch(function (error) {
             console.log(error);
         })
-        modificarPaginaActual();
-        if(paginaActual ==   lista.length - 2){
-            let numPag = parseInt(paginaActual) + 1;
-            let siguiente = "https://api.thecatapi.com/v1/images/search?limit=8&mime_types=jpg,png&order=desc&page=" +  numPag+ "&category_ids=" + opt;
-
-            comprobarSiguiente(siguiente);
-        }
+        modificarPaginador();
      }
-        
         
     
 })
 
-for (let i = 1; i < lista.length - 1; i++) {
-    lista[i].addEventListener("click", () => {
-        paginaActual = i;
+document.getElementById("primero").addEventListener("click", () => {
+    
         let opt = document.getElementById("categories").value;
-        let lnk = "https://api.thecatapi.com/v1/images/search?limit=8&mime_types=jpg,png&order=desc&page=" + paginaActual + "&category_ids=" + opt;
+        paginaActual = 0;
+        numeroDeImagenes = document.getElementById("numeroDeImagenes").value;
+        let lnk = "https://api.thecatapi.com/v1/images/search?limit="+numeroDeImagenes+"&mime_types=jpg,png&order=desc&page=" + paginaActual + "&category_ids=" + opt;
+        console.log(lnk);
         requireData(lnk).then(function (data) {
             showImages(data);
         }).catch(function (error) {
             console.log(error);
         })
-        modificarPaginaActual();
-        if(paginaActual ==   lista.length - 2){
-            let numPag = parseInt(paginaActual) + 1;
-            let siguiente = "https://api.thecatapi.com/v1/images/search?limit=8&mime_types=jpg,png&order=desc&page=" +  numPag+ "&category_ids=" + opt;
+        modificarPaginador();
 
-            comprobarSiguiente(siguiente);
-        }
+    
+})
+document.getElementById("ultimo").addEventListener("click", () => {
+    
+    let opt = document.getElementById("categories").value;
+    paginaActual = totalPaginas-1;
+    numeroDeImagenes = document.getElementById("numeroDeImagenes").value;
+    let lnk = "https://api.thecatapi.com/v1/images/search?limit="+numeroDeImagenes+"&mime_types=jpg,png&order=desc&page=" + paginaActual + "&category_ids=" + opt;
+    console.log(lnk);
+    requireData(lnk).then(function (data) {
+        showImages(data);
+    }).catch(function (error) {
+        console.log(error);
     })
-}
+    modificarPaginador();
+
+
+})
+
+
 
 function crearPaginador(){
 
-    let sg = document.getElementById("siguiente");
-    let numPag = parseInt(paginaActual);
-    let sigPag = parseInt(paginaActual) + 1;
-    let opt = document.getElementById("categories").value;
-
+   
+    let numPag = parseInt(paginaActual)+1;
     let nuevoAt = document.createElement("li");
         nuevoAt.setAttribute("class", "waves-effect active");
+        nuevoAt.setAttribute("id","numeroPagina");
     let hrf = document.createElement("a");
     let att = "#!" + numPag;
         hrf.setAttribute("href", att)
-        hrf.textContent = numPag;
+        hrf.textContent = "Pagina "+numPag+"/"+totalPaginas;
     nuevoAt.appendChild(hrf);
     divLista.appendChild(nuevoAt);
-
     
-    let siguiente = "https://api.thecatapi.com/v1/images/search?limit=8&mime_types=jpg,png&order=desc&page=" +  sigPag+ "&category_ids=" + opt;
-    comprobarSiguiente(siguiente);
-
-    añadirBusqueda(nuevoAt);
-
-    
-
-
 }
 
 function modificarPaginador() {
 
-    let sg = document.getElementById("siguiente");
-    let opt = document.getElementById("categories").value;
-    let numPag = parseInt(paginaActual) + 1;
-    let pagSiguiente = "https://api.thecatapi.com/v1/images/search?limit=8&mime_types=jpg,png&order=desc&page=" + numPag + "&category_ids=" + opt
-
-    let nuevoAt = document.createElement("li");
-    nuevoAt.setAttribute("class", "waves-effect");
-    let hrf = document.createElement("a");
-    let att = "#!" + numPag;
-    hrf.setAttribute("href", att)
-    hrf.textContent = numPag;
-    nuevoAt.appendChild(hrf);
-    divLista.appendChild(nuevoAt);
-    añadirBusqueda(nuevoAt);
-    
-    
+    let numPag = parseInt(paginaActual)+1;
+    let numeroPagina = document.getElementById("numeroPagina").firstElementChild;
+        numeroPagina.textContent = "Pagina "+numPag+"/"+totalPaginas;
 }
 
-function reiniciarPaginador(){
 
-    
+
+function reiniciarPaginador(){
+    let opt = document.getElementById("categories").value;
+
     while(divLista.firstChild){
         divLista.removeChild(divLista.firstChild);
     }
-    
-    paginaActual = 1;
-
-
-}
-
-function añadirBusqueda(element){
-
-    element.addEventListener("click",function(){
-        let opt = document.getElementById("categories").value;
-        let lnk = "https://api.thecatapi.com/v1/images/search?limit=8&mime_types=jpg,png&order=desc&page=" + element.textContent + "&category_ids=" + opt;
-        requireData(lnk).then(function (data) {
-            showImages(data);
-        }).catch(function (error) {
-            console.log(error);
-        })
-        paginaActual = element.textContent;
-        modificarPaginaActual();
-        if(paginaActual ==   lista.length - 2){
-            let numPag = parseInt(paginaActual) + 1;
-            let siguiente = "https://api.thecatapi.com/v1/images/search?limit=8&mime_types=jpg,png&order=desc&page=" +  numPag+ "&category_ids=" + opt;
-            comprobarSiguiente(siguiente);
-        }
+    paginaActual = 0;
+    catImages = "https://api.thecatapi.com/v1/images/search?limit=50&order=Desc&mime_types=jpg,png&category_ids=" + opt;
+    numeroDeImagenes = document.getElementById("numeroDeImagenes").value;
+    requireData(catImages).then(function (data) {
+        console.log(Math.ceil(data.length/numeroDeImagenes));
+        totalPaginas = Math.ceil(data.length/numeroDeImagenes);
+        modificarPaginador();
+    }).catch(function (error) {
+        console.log(error);
     })
 }
 
-function modificarPaginaActual() {
 
-    lista = document.getElementById("paginas").getElementsByTagName("li");
-    for (let i = 0; i < lista.length; i++) {
-        lista[i].className = "waves-effect";
-    }
-    lista[paginaActual].className = "waves-effect active";
-
-}
 
 function search() {
 
     let opt = document.getElementById("categories").value;
-    let lnk = "https://api.thecatapi.com/v1/images/search?limit=8&mime_types=jpg,png&order=desc&page=1&category_ids=" + opt;
+    numeroDeImagenes = document.getElementById("numeroDeImagenes").value;
+    let lnk = "https://api.thecatapi.com/v1/images/search?limit="+numeroDeImagenes+"&mime_types=jpg,png&order=desc&page=0&category_ids=" + opt;
     requireData(lnk).then(function (data) {
         reiniciarPaginador();
         showImages(data);
@@ -223,20 +204,13 @@ function fillOptions(data) {
 function showImages(data) {
 
     
-    console.log(data.get);
+    console.log(data);
     var cont = document.getElementById("listaImagenes");
     while (cont.firstChild) {
         cont.removeChild(cont.firstChild);
     }
-    if(data.length==0){
-        let elem = document.createElement("span");
-            elem.textContent="No hay más imágenes para mostrar en esta categoría.";
-        cont.appendChild(elem);
-    }else{
-
     
     
-
     for (let i = 0; i < data.length; i++) {
 
         let image = document.createElement("img");
@@ -255,29 +229,6 @@ function showImages(data) {
         cont.appendChild(listItem);
     }
     
-    }
+    
     M.AutoInit();
 }
-
-
-function comprobarSiguiente(link) {
-    requireData(link).then(function (data) {
-        console.log(data.length);
-        if (data.length>0) {
-            modificarPaginador();
-        } 
-    }).catch(function (error) {
-        console.log(error);
-    })
-}
-
-function limitarPaginador(){
-
-    
-
-
-
-
-}
-
-
